@@ -7,6 +7,7 @@ on:
 
 jobs:
   publish:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
@@ -14,15 +15,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '16' # Specify the Node.js version you want to use
+          node-version: '18'
 
       - name: Install dependencies
         run: npm install
 
       - name: Bump version
-        run: npm version patch # or 'minor' or 'major' depending on your versioning strategy
+        run: npm version patch
 
       - name: Configure npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
